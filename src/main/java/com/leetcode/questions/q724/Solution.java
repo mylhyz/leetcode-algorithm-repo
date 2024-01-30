@@ -12,15 +12,18 @@ class Solution {
             if (i != 0) { // 一个条件是index=0时，认为左边的值是0
                 leftSum += nums[i - 1];
             }
-            int x = 0;
-            if (i != nums.length - 1) {
-                x = nums[i + 1];
-            }
-            int rightSum = sum - leftSum - x;
+            int rightSum = sum - leftSum - nums[i];
             if (leftSum == rightSum) {
                 return i;
             }
         }
         return -1;
+    }
+
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{1, 7, 3, 6, 5, 6};
+        int ret = new Solution().pivotIndex(nums);
+        System.out.println(ret);
     }
 }
