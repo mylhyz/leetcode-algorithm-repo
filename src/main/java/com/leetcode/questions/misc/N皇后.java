@@ -1,4 +1,4 @@
-package com.leetcode.questions.q724;
+package com.leetcode.questions.misc;
 
 import java.util.ArrayList;
 import java.util.List;

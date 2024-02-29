@@ -1,6 +1,7 @@
-package com.leetcode.questions.q724;
+package com.leetcode.questions.misc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,8 +16,9 @@ import java.util.List;
 // 这里的结果存放直接在方法开头即可
 // 3，确定回溯代码
 // 从 startIndex 开始，先向路径中添加一个数字，然后startIndex+1，回溯完成之后再恢复现场
+// 需要额外关注剪枝，这里通过不重复的子集想到数组先排列能够得到一个能够简化使用的数组
 
-public class 子集 {
+public class 子集II {
 
     private static final List<List<Integer>> result = new ArrayList<>();
     private static final LinkedList<Integer> path = new LinkedList<>();
@@ -24,6 +26,12 @@ public class 子集 {
     public static void backtracking(int[] nums, int startIndex) {
         result.add(new ArrayList<>(path));
         for (int i = startIndex; i < nums.length; ++i) {
+            // 这里需要剪枝
+            if (i > startIndex) { // 确保不会出现i-1是不存在索引的情况
+                if (nums[i] == nums[i - 1]) { // 确定当前的数字在前面没有出现过（如果出现过说明得到的是重复的子集，可以跳过）
+                    continue;
+                }
+            }
             path.push(nums[i]);
             backtracking(nums, i + 1);
             path.pop();
@@ -32,7 +40,8 @@ public class 子集 {
 
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 2, 3};
+        int[] nums = new int[]{2, 2, 1};
+        Arrays.sort(nums); // 必须排序，才能保证相同数字挨在一起
         backtracking(nums, 0);
         System.out.println(result);
     }
